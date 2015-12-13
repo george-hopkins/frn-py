@@ -6,7 +6,7 @@ python:
     - 3.5
 
 install:
-    - travis_retry pip install -U pytest
+    - travis_retry pip install -U . pytest
 
 script:
-    - PYTHONPATH=$PWD:$PYTHONPATH py.test tests/
+    - py.test tests/
