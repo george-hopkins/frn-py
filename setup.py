@@ -1,0 +1,31 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='frn',
+    version='0.1.0',
+    description='A Python library for the Free Radio Network',
+    url='https://github.com/george-hopkins/frn-py',
+    author='George Hopkins',
+    author_email='george-hopkins@null.net',
+    license='LGPLv3',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Framework :: Twisted',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Communications :: Ham Radio',
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+    ],
+    keywords='frn freeradionetwork radio network',
+    packages=find_packages(),
+    install_requires=['twisted'],
+    scripts = [],
+)

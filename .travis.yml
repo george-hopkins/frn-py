@@ -1,0 +1,12 @@
+language: python
+sudo: false
+
+python:
+    - 2.7
+    - 3.5
+
+install:
+    - travis_retry pip install -U pytest
+
+script:
+    - PYTHONPATH=$PWD:$PYTHONPATH py.test tests/
