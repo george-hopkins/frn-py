@@ -6,6 +6,10 @@ class InvalidServerResponse(Exception):
     pass
 
 
+class InvalidClientRequest(Exception):
+    pass
+
+
 class LineReceiver(basic.LineReceiver):
     def decodedLineReceived(self, line):
         """Override this for when each line is received."""
@@ -56,3 +60,32 @@ class CommandClient(LineReceiver):
 
     def finish(self):
         self.sendCommand(None, self.transport.loseConnection, None)
+
+
+class CommandServer(LineReceiver):
+    def __init__(self):
+        self.commandHandlers = {}
+
+    def registerCommand(self, name, handler, allowedArgs=False):
+        self.commandHandlers[name] = (handler, allowedArgs)
+
+    def deregisterCommands(self):
+        self.commandHandlers = {}
+
+    def decodedLineReceived(self, line):
+        parts = line.split(':', 1)
+        command = parts[0]
+        if len(parts) == 1:
+            args = {}
+        elif parts[1] and parts[1][0] == '<':
+            args = parse_dict(parts[1])
+        else:
+            args = {'_': parts[1]}
+        if command in self.commandHandlers:
+            handler, allowedArgs = self.commandHandlers[command]
+            if allowedArgs is False:
+                handler(args)
+            else:
+                handler({key: args[key] for key in allowedArgs})
+        else:
+            raise InvalidClientRequest('Unknown command "%s".' % command)
