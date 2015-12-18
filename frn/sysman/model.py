@@ -4,31 +4,32 @@ class Server():
         self.port = port
         self.nets = []
 
+    @classmethod
+    def from_dict(cls, data):
+        server = cls(data.get('SN'), int(data.get('PT')))
+        server.version = data.get('VX')
+        server.email = data.get('OW')
+        server.password = data.get('PW')
+        return server
+
+
 class Net():
     def __init__(self, name):
         self.name = name
         self.clients = []
 
+
 class Client():
-    def __init__(self, data):
-        self.data = data
-
-    @property
-    def name(self):
-        return self.data.get('ON')
-
-    @property
-    def country(self):
-        return self.data.get('NN')
-
-    @property
-    def city(self):
-        return self.data.get('CT')
-
-    @property
-    def band(self):
-        return self.data.get('BC')
-
-    @property
-    def description(self):
-        return self.data.get('DS')
+    @classmethod
+    def from_dict(cls, data):
+        client = cls()
+        client.name = data.get('ON')
+        client.email = data.get('EA')
+        client.password = data.get('PW')
+        client.city = data.get('CT')
+        client.country = data.get('NN')
+        client.band = data.get('BC')
+        client.description = data.get('DS')
+        client.type = data.get('CL')
+        client.ip = data.get('IP')
+        return client
